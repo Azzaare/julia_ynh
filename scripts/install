@@ -29,6 +29,9 @@ chown -R "$app:$app" "$juliaup_depot"
 chmod 1777 "$juliaup_depot"
 chmod 1777 "$juliaup_depot/juliaup"
 
+touch "$juliaup_depot/juliaup/.juliaup-lock"
+chmod 666 "$juliaup_depot/juliaup/.juliaup-lock"
+
 cat > "/etc/profile.d/$app.sh" << EOF
 if [ "${USER:-}" = "$app" ]; then
   export PATH="/home/$app/.juliaup/bin:$PATH"
@@ -40,6 +43,8 @@ if [ "$app" = "julia" ]; then
   cat > "/usr/local/bin/julia" << EOF
 #!/bin/bash
 set -eu
+umask 000
+export HOME="/home/$app"
 export JULIAUP_DEPOT_PATH="/home/$app/.julia"
 export JULIAUP_CHANNEL="${JULIAUP_CHANNEL:-release}"
 exec "/home/$app/.juliaup/bin/julia" "$@"

@@ -5,6 +5,8 @@
 A global launcher is installed at /usr/local/bin/julia (primary instance only).
 It uses the shared juliaup depot in /home/julia/.julia and runs the Julia binary
 from /home/julia/.juliaup.
+The launcher also forces HOME=/home/julia to avoid failures for users without
+a home directory.
 
 Notes:
 - The juliaup CLI should be used via YunoHost actions or by running as the app user.
