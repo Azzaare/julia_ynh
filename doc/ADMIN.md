@@ -13,6 +13,12 @@ current directory does not exist for the caller.
 Notes:
 - The juliaup CLI should be used via YunoHost actions or by running as the app user.
 - The launcher is intended for system-wide Julia execution without extra setup.
+- This package is single-instance by design (shared juliaup depot/launcher).
+
+## Webadmin actions
+
+In YunoHost webadmin, use the app "Config panel" to access juliaup actions
+(status, add/remove versions, set default, update).
 
 ## List installed Julia versions
 

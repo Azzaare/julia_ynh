@@ -1,0 +1,38 @@
+#!/bin/bash
+set -eu
+
+# shellcheck disable=SC1090
+source "$(dirname "$0")/_common.sh"
+
+run__status() {
+  sudo -u "$app" -H "$juliaup_bin" status
+}
+
+run__add() {
+  if [ -z "${add_version:-}" ]; then
+    ynh_die --message="Please provide a Julia version or channel to install."
+  fi
+  sudo -u "$app" -H "$juliaup_bin" add "$add_version"
+}
+
+run__remove() {
+  if [ -z "${remove_version:-}" ]; then
+    ynh_die --message="Please provide a Julia version or channel to remove."
+  fi
+  sudo -u "$app" -H "$juliaup_bin" remove "$remove_version"
+}
+
+run__default() {
+  if [ -z "${default_version:-}" ]; then
+    ynh_die --message="Please provide a Julia version or channel to set as default."
+  fi
+  sudo -u "$app" -H "$juliaup_bin" default "$default_version"
+}
+
+run__update_versions() {
+  sudo -u "$app" -H "$juliaup_bin" update
+}
+
+run__update_juliaup() {
+  sudo -u "$app" -H "$juliaup_bin" self update
+}

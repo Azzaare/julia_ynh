@@ -3,7 +3,7 @@ packaging_format = 2
 id = "julia"
 name = "Julia (via juliaup)"
 description.en = "Julia programming language installed via juliaup version manager"
-version = "1.0.0~ynh6"
+version = "1.0.0~ynh8"
 maintainers = ["Azzaare"]
 
 [upstream]
@@ -15,7 +15,7 @@ code = "https://github.com/JuliaLang/juliaup"
 yunohost = ">= 11.2"
 helpers_version = "2.1"
 architectures = ["amd64","arm64"]
-multi_instance = true
+multi_instance = false
 ldap = "not_relevant"
 sso = "not_relevant"
 disk = "500M"

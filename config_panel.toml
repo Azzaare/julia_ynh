@@ -1,0 +1,73 @@
+version = "1.0"
+
+[main]
+name.en = "Juliaup"
+
+[main.status]
+name.en = "Status"
+
+[main.status.status]
+type = "button"
+ask.en = "Show installed versions"
+style = "info"
+icon = "info-circle"
+
+[main.add]
+name.en = "Install a version"
+
+[main.add.add_version]
+type = "string"
+ask.en = "Version or channel"
+example = "lts"
+bind = "null"
+
+[main.add.add]
+type = "button"
+ask.en = "Install"
+style = "success"
+icon = "plus"
+
+[main.remove]
+name.en = "Remove a version"
+
+[main.remove.remove_version]
+type = "string"
+ask.en = "Version or channel"
+example = "1.10"
+bind = "null"
+
+[main.remove.remove]
+type = "button"
+ask.en = "Remove"
+style = "danger"
+icon = "trash"
+
+[main.default]
+name.en = "Set default version"
+
+[main.default.default_version]
+type = "string"
+ask.en = "Version or channel"
+example = "1.11"
+bind = "null"
+
+[main.default.default]
+type = "button"
+ask.en = "Set default"
+style = "warning"
+icon = "star"
+
+[main.update]
+name.en = "Update"
+
+[main.update.update_versions]
+type = "button"
+ask.en = "Update installed Julia versions"
+style = "success"
+icon = "refresh"
+
+[main.update.update_juliaup]
+type = "button"
+ask.en = "Update juliaup"
+style = "info"
+icon = "download"
