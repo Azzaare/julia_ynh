@@ -34,10 +34,12 @@ set__default_version() {
 }
 
 get__installed_versions() {
-  local output list
+  local output list_items raw_html html
   output="$(sudo -u "$app" -H "$juliaup_bin" status 2>/dev/null || true)"
 
-  list="$(echo "$output" | awk '
+  raw_html="$(printf '%s' "$output" | sed -e 's/&/&amp;/g' -e 's/</&lt;/g' -e 's/>/&gt;/g' -e 's/\r//g' -e ':a;N;$!ba;s/\n/&#10;/g')"
+
+  list_items="$(echo "$output" | awk '
     /^[[:space:]]*Default[[:space:]]/ { next }
     /^[[:space:]]*-+[[:space:]]*$/ { next }
     /^[[:space:]]*$/ { next }
@@ -45,15 +47,19 @@ get__installed_versions() {
       line = $0
       sub(/^[[:space:]]*\*[[:space:]]+/, "default ", line)
       sub(/^[[:space:]]+/, "", line)
-      print "- " line
+      gsub(/&/, "&amp;", line)
+      gsub(/</, "&lt;", line)
+      gsub(/>/, "&gt;", line)
+      printf "<li>%s</li>", line
     }
   ')"
 
-  if [ -z "$list" ]; then
-    echo "- (no versions installed)"
-  else
-    echo "$list"
+  if [ -z "$list_items" ]; then
+    list_items="<li>(no versions installed)</li>"
   fi
+
+  html="<details><summary>Raw output</summary><pre>${raw_html}</pre></details><details><summary>Parsed list</summary><ul>${list_items}</ul></details>"
+  echo "$html"
 }
 
 get__status() {
