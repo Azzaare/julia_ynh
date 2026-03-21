@@ -1,5 +1,10 @@
 #!/bin/bash
-set -eu
+set -e
+
+action="${1:-show}"
+export YNH_APP_ACTION="$action"
+
+set -u
 
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
@@ -85,6 +90,4 @@ run__update_juliaup() {
   sudo -u "$app" -H "$juliaup_bin" self update
 }
 
-action="${1:-show}"
-export YNH_APP_ACTION="$action"
 ynh_app_config_run "$action"
