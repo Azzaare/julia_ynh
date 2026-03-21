@@ -4,13 +4,13 @@ version = "1.0"
 name.en = "Juliaup"
 
 [main.status]
-name.en = "Status"
+name.en = "Installed versions"
 
-[main.status.status]
-type = "button"
-ask.en = "Show installed versions"
-style = "info"
-icon = "info-circle"
+[main.status.installed_versions]
+type = "text"
+ask.en = "Installed Julia versions"
+help.en = "Refresh this page to update the list."
+readonly = true
 bind = "null"
 
 [main.add]

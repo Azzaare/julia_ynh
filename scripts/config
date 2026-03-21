@@ -33,6 +33,10 @@ set__default_version() {
   return 0
 }
 
+get__installed_versions() {
+  sudo -u "$app" -H "$juliaup_bin" status
+}
+
 get__status() {
   echo ""
 }
