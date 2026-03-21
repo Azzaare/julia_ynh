@@ -19,7 +19,7 @@ multi_instance = true
 ldap = "not_relevant"
 sso = "not_relevant"
 disk = "500M"
-ram.runtime = "128M"
+ram.build = "256M"`nram.runtime = "128M"
 
 [resources]
 
