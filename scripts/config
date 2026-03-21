@@ -54,15 +54,15 @@ get__installed_versions() {
       version = parts[2]
       if (channel == "" || version == "") next
       if (is_default) {
-        print "• " channel " " version " (default)"
+        print "- " channel ": " version " (default)"
       } else {
-        print "• " channel " " version
+        print "- " channel ": " version
       }
     }
   ')"
 
   if [ -z "$lines" ]; then
-    lines="• (no versions installed)"
+    lines="- (no versions installed)"
   fi
 
   # Emit a YAML literal block so the text shows as multi-line in the panel.
