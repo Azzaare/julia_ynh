@@ -21,4 +21,4 @@ cat > "/etc/profile.d/$app.sh" << EOF
 export PATH="/home/$app/.juliaup/bin:$PATH"
 EOF
 
-sudo -u "$app" -H juliaup status
+sudo -u "$app" -H "$juliaup_bin" status

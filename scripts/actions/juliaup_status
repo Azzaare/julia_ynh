@@ -4,4 +4,4 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/../_common.sh"
 
-sudo -u "$app" -H juliaup status
+sudo -u "$app" -H "$juliaup_bin" status

@@ -10,4 +10,4 @@ if [ -z "$version" ]; then
   exit 1
 fi
 
-sudo -u "$app" -H juliaup add "$version"
+sudo -u "$app" -H "$juliaup_bin" add "$version"
