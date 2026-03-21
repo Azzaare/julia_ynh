@@ -8,11 +8,47 @@ get__add_version() {
   echo ""
 }
 
+set__add_version() {
+  return 0
+}
+
 get__remove_version() {
   echo ""
 }
 
+set__remove_version() {
+  return 0
+}
+
 get__default_version() {
+  echo ""
+}
+
+set__default_version() {
+  return 0
+}
+
+get__status() {
+  echo ""
+}
+
+get__add() {
+  echo ""
+}
+
+get__remove() {
+  echo ""
+}
+
+get__default() {
+  echo ""
+}
+
+get__update_versions() {
+  echo ""
+}
+
+get__update_juliaup() {
   echo ""
 }
 
@@ -48,3 +84,5 @@ run__update_versions() {
 run__update_juliaup() {
   sudo -u "$app" -H "$juliaup_bin" self update
 }
+
+ynh_app_config_run "$1"

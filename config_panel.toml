@@ -11,6 +11,7 @@ type = "button"
 ask.en = "Show installed versions"
 style = "info"
 icon = "info-circle"
+bind = "null"
 
 [main.add]
 name.en = "Install a version"
@@ -26,6 +27,7 @@ type = "button"
 ask.en = "Install"
 style = "success"
 icon = "plus"
+bind = "null"
 
 [main.remove]
 name.en = "Remove a version"
@@ -41,6 +43,7 @@ type = "button"
 ask.en = "Remove"
 style = "danger"
 icon = "trash"
+bind = "null"
 
 [main.default]
 name.en = "Set default version"
@@ -56,6 +59,7 @@ type = "button"
 ask.en = "Set default"
 style = "warning"
 icon = "star"
+bind = "null"
 
 [main.update]
 name.en = "Update"
@@ -65,9 +69,11 @@ type = "button"
 ask.en = "Update installed Julia versions"
 style = "success"
 icon = "refresh"
+bind = "null"
 
 [main.update.update_juliaup]
 type = "button"
 ask.en = "Update juliaup"
 style = "info"
 icon = "download"
+bind = "null"
