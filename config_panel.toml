@@ -5,11 +5,11 @@ name.en = "Juliaup"
 
 [main.status]
 name.en = "Installed versions"
+help.en = "Refresh this page to update the list."
 
 [main.status.installed_versions]
 type = "markdown"
 ask.en = "Installed Julia versions"
-help.en = "Refresh this page to update the list."
 readonly = true
 bind = "null"
 
