@@ -1,0 +1,44 @@
+[status]
+name = "Show installed Julia versions"
+command = "/bin/bash scripts/actions/juliaup_status"
+description.en = "Show installed Julia versions via juliaup."
+
+[add]
+name = "Install Julia version"
+command = "/bin/bash scripts/actions/juliaup_add"
+description.en = "Install a Julia version or channel via juliaup."
+
+[add.arguments.version]
+type = "string"
+ask.en = "Version or channel to install (e.g. 1.11, lts, release, nightly)"
+example = "lts"
+
+[remove]
+name = "Remove Julia version"
+command = "/bin/bash scripts/actions/juliaup_remove"
+description.en = "Remove a Julia version via juliaup."
+
+[remove.arguments.version]
+type = "string"
+ask.en = "Version or channel to remove (e.g. 1.10, lts)"
+example = "1.10"
+
+[default]
+name = "Set default Julia version"
+command = "/bin/bash scripts/actions/juliaup_default"
+description.en = "Set the default Julia version via juliaup."
+
+[default.arguments.version]
+type = "string"
+ask.en = "Version or channel to set as default (e.g. 1.11, lts)"
+example = "1.11"
+
+[update_versions]
+name = "Update Julia versions"
+command = "/bin/bash scripts/actions/juliaup_update"
+description.en = "Update installed Julia versions via juliaup."
+
+[update_juliaup]
+name = "Update juliaup"
+command = "/bin/bash scripts/actions/juliaup_self_update"
+description.en = "Update the juliaup tool itself."
