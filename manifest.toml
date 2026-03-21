@@ -21,3 +21,11 @@ sso = "not_relevant"
 disk = "500M"
 ram.build = "256M"
 ram.runtime = "128M"
+
+[resources]
+
+[resources.system_user]
+home = "/home/__APP__"
+
+[resources.apt]
+packages = ["curl", "ca-certificates"]

@@ -5,5 +5,3 @@ set -eu
 source "$(dirname "$0")/_common.sh"
 
 rm -f "/etc/profile.d/$app.sh"
-
-ynh_system_user_delete "$app"

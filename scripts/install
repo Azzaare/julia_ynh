@@ -4,14 +4,9 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-ynh_system_user_create --username="$app"
-
 # Ensure home exists for juliaup
 mkdir -p "/home/$app"
 chown -R "$app:$app" "/home/$app"
-
-yunohost_deb="curl ca-certificates"
-ynh_apt_install_dependencies $yunohost_deb
 
 sudo -u "$app" -H bash << 'EOF'
 curl -fsSL https://install.julialang.org | sh -s -- -y
