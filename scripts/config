@@ -34,7 +34,21 @@ set__default_version() {
 }
 
 get__installed_versions() {
-  sudo -u "$app" -H "$juliaup_bin" status
+  local output list
+  output="$(sudo -u "$app" -H "$juliaup_bin" status 2>/dev/null || true)"
+
+  list="$(echo "$output" | awk '
+    BEGIN { seen = 0 }
+    /^[[:space:]-]+$/ { seen = 1; next }
+    !seen { next }
+    NF { print "- " $0 }
+  ')"
+
+  if [ -z "$list" ]; then
+    echo "- (no versions installed)"
+  else
+    echo "$list"
+  fi
 }
 
 get__status() {

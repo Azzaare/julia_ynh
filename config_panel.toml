@@ -7,7 +7,7 @@ name.en = "Juliaup"
 name.en = "Installed versions"
 
 [main.status.installed_versions]
-type = "text"
+type = "markdown"
 ask.en = "Installed Julia versions"
 help.en = "Refresh this page to update the list."
 readonly = true
