@@ -1,5 +1,10 @@
 # Admin guide
 
+## Global julia launcher
+
+A global launcher is installed at /usr/local/bin/julia (primary instance only).
+It runs Julia as the app system user and uses the juliaup depot in /home/julia/.julia.
+
 ## List installed Julia versions
 
 juliaup status

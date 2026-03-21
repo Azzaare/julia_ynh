@@ -6,14 +6,30 @@ source "$(dirname "$0")/_common.sh"
 
 # Ensure home exists for juliaup
 mkdir -p "/home/$app"
+mkdir -p "$juliaup_depot"
 chown -R "$app:$app" "/home/$app"
 
-sudo -u "$app" -H bash << 'EOF'
-curl -fsSL https://install.julialang.org | sh -s -- -y
+# If a stale juliaup config exists without a juliaup binary, clean it up
+if [ ! -x "$juliaup_bin" ] && [ -f "$juliaup_depot/juliaup/juliaup.json" ]; then
+  rm -f "$juliaup_depot/juliaup/juliaup.json"
+fi
+
+sudo -u "$app" -H env JULIAUP_DEPOT_PATH="$juliaup_depot" bash << 'EOF'
+curl -fsSL https://install.julialang.org | sh -s -- -y --add-to-path=no --background-selfupdate=0
 EOF
 
 cat > "/etc/profile.d/$app.sh" << EOF
 export PATH="/home/$app/.juliaup/bin:$PATH"
 EOF
+
+# Global launcher for the primary instance
+if [ "$app" = "julia" ]; then
+  cat > "/usr/local/bin/julia" << EOF
+#!/bin/bash
+set -eu
+exec sudo -u "$app" -H env JULIAUP_DEPOT_PATH="$juliaup_depot" "$julia_bin" "$@"
+EOF
+  chmod 755 "/usr/local/bin/julia"
+fi
 
 sudo -u "$app" -H "$juliaup_bin" status
