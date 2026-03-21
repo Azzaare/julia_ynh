@@ -39,5 +39,17 @@ export JULIAUP_CHANNEL="\${JULIAUP_CHANNEL:-release}"
 exec "/home/$app/.juliaup/bin/julia" "\$@"
 EOF
     chmod 755 "/usr/local/bin/julia"
+
+    cat > "/usr/local/bin/juliaup" << EOF
+#!/bin/bash
+set -eu
+umask 000
+cd "/home/$app"
+export HOME="/home/$app"
+export JULIAUP_DEPOT_PATH="/home/$app/.julia"
+export JULIA_DEPOT_PATH="/home/$app/.julia"
+exec "/home/$app/.juliaup/bin/juliaup" "\$@"
+EOF
+    chmod 755 "/usr/local/bin/juliaup"
   fi
 }

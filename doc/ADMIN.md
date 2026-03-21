@@ -15,6 +15,11 @@ Notes:
 - The launcher is intended for system-wide Julia execution without extra setup.
 - This package is single-instance by design (shared juliaup depot/launcher).
 
+## Global juliaup launcher
+
+A global launcher is installed at /usr/local/bin/juliaup (primary instance only).
+It runs with HOME=/home/julia and uses the shared juliaup depot.
+
 ## Webadmin actions
 
 In YunoHost webadmin, use the app "Config panel" to access juliaup actions

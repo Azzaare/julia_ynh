@@ -9,4 +9,5 @@ rm -f "/etc/profile.d/$app.sh"
 # Remove global launcher if this is the primary instance
 if [ "$app" = "julia" ]; then
   rm -f "/usr/local/bin/julia"
+  rm -f "/usr/local/bin/juliaup"
 fi
