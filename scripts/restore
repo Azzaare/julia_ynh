@@ -4,5 +4,13 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-ynh_restore_file --origin_path="/home/$app/.juliaup"
-chown -R "$app:$app" "/home/$app/.juliaup"
+ynh_restore_file --origin_path="/home/$app/.juliaup" --not_mandatory
+ynh_restore_file --origin_path="/home/$app/.julia" --not_mandatory
+
+if [ -d "/home/$app/.juliaup" ]; then
+  chown -R "$app:$app" "/home/$app/.juliaup"
+fi
+
+if [ -d "/home/$app/.julia" ]; then
+  chown -R "$app:$app" "/home/$app/.julia"
+fi

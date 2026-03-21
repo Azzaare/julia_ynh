@@ -4,4 +4,10 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-ynh_backup --src_path="/home/$app/.juliaup"
+if [ -d "/home/$app/.juliaup" ]; then
+  ynh_backup "/home/$app/.juliaup"
+fi
+
+if [ -d "/home/$app/.julia" ]; then
+  ynh_backup "/home/$app/.julia"
+fi
