@@ -34,36 +34,40 @@ set__default_version() {
 }
 
 get__installed_versions() {
-  local output raw_flat parsed
+  local output lines
   output="$(sudo -u "$app" -H "$juliaup_bin" status 2>/dev/null || true)"
 
-  raw_flat="$(printf '%s' "$output" | sed ':a;N;$!ba;s/\n/\\n/g')"
-
-  parsed="$(echo "$output" | awk '
+  lines="$(echo "$output" | awk '
     /^[[:space:]]*Default[[:space:]]/ { next }
     /^[[:space:]]*-+[[:space:]]*$/ { next }
     /^[[:space:]]*$/ { next }
     {
-      default_flag = ""
-      if ($1 == "*") {
-        channel = $2
-        version = $3
-        default_flag = " (default)"
-      } else {
-        channel = $1
-        version = $2
+      is_default = 0
+      line = $0
+      if (line ~ /^[[:space:]]*\*/) {
+        is_default = 1
+        sub(/^[[:space:]]*\*[[:space:]]+/, "", line)
       }
+      sub(/^[[:space:]]+/, "", line)
+      n = split(line, parts, /[[:space:]]+/)
+      channel = parts[1]
+      version = parts[2]
       if (channel == "" || version == "") next
-      item = channel " " version default_flag
-      if (out == "") out = item; else out = out " | " item
-    }
-    END {
-      if (out == "") out = "(no versions installed)"
-      print out
+      if (is_default) {
+        print "• " channel " " version " (default)"
+      } else {
+        print "• " channel " " version
+      }
     }
   ')"
 
-  echo "RAW=$raw_flat || PARSED=$parsed"
+  if [ -z "$lines" ]; then
+    lines="• (no versions installed)"
+  fi
+
+  # Emit a YAML literal block so the text shows as multi-line in the panel.
+  echo "|-"
+  echo "$lines" | sed 's/^/  /'
 }
 
 get__status() {

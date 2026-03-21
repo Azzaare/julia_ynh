@@ -8,6 +8,7 @@ source "$(dirname "$0")/_common.sh"
 mkdir -p "/home/$app"
 mkdir -p "$juliaup_depot"
 chown -R "$app:$app" "/home/$app"
+ynh_app_setting_set --app="$app" --key=install_dir --value="/home/$app"
 
 # If a stale juliaup config exists without a juliaup binary, clean it up
 if [ ! -x "$juliaup_bin" ] && [ -f "$juliaup_depot/juliaup/juliaup.json" ]; then

@@ -4,6 +4,8 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
+ynh_app_setting_set --app="$app" --key=install_dir --value="/home/$app"
+
 sudo -u "$app" -H "$juliaup_bin" self update
 sudo -u "$app" -H "$juliaup_bin" update
 
