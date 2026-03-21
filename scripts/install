@@ -18,8 +18,15 @@ sudo -u "$app" -H env JULIAUP_DEPOT_PATH="$juliaup_depot" bash << 'EOF'
 curl -fsSL https://install.julialang.org | sh -s -- -y --add-to-path=no --background-selfupdate=0
 EOF
 
+# Allow system-wide execution of Julia binaries (read/exec only for others)
+chmod 755 "/home/$app"
+chmod -R o+rx "/home/$app/.juliaup"
+chmod -R o+rx "/home/$app/.julia"
+
 cat > "/etc/profile.d/$app.sh" << EOF
-export PATH="/home/$app/.juliaup/bin:$PATH"
+if [ "${USER:-}" = "$app" ]; then
+  export PATH="/home/$app/.juliaup/bin:$PATH"
+fi
 EOF
 
 # Global launcher for the primary instance
@@ -27,7 +34,9 @@ if [ "$app" = "julia" ]; then
   cat > "/usr/local/bin/julia" << EOF
 #!/bin/bash
 set -eu
-exec sudo -u "$app" -H env JULIAUP_DEPOT_PATH="$juliaup_depot" "$julia_bin" "$@"
+export JULIAUP_DEPOT_PATH="/home/$app/.julia"
+export JULIAUP_CHANNEL="${JULIAUP_CHANNEL:-release}"
+exec "/home/$app/.juliaup/bin/julia" "$@"
 EOF
   chmod 755 "/usr/local/bin/julia"
 fi
