@@ -63,7 +63,7 @@ get__installed_versions() {
     }
   ')"
 
-  echo "RAW: $raw_flat || PARSED: $parsed"
+  echo "RAW=$raw_flat || PARSED=$parsed"
 }
 
 get__status() {
