@@ -19,32 +19,33 @@ multi_instance = true
 ldap = "not_relevant"
 sso = "not_relevant"
 disk = "500M"
-ram.build = "256M"`nram.runtime = "128M"
+ram.build = "256M"
+ram.runtime = "128M"
 
 [resources]
 
-    [resources.actions]
+[resources.actions]
 
-    [resources.actions.status]
-    command = "juliaup_status"
-    name.en = "Show installed Julia versions"
+[resources.actions.status]
+command = "juliaup_status"
+name.en = "Show installed Julia versions"
 
-    [resources.actions.add]
-    command = "juliaup_add"
-    name.en = "Install Julia version"
+[resources.actions.add]
+command = "juliaup_add"
+name.en = "Install Julia version"
 
-    [resources.actions.remove]
-    command = "juliaup_remove"
-    name.en = "Remove Julia version"
+[resources.actions.remove]
+command = "juliaup_remove"
+name.en = "Remove Julia version"
 
-    [resources.actions.default]
-    command = "juliaup_default"
-    name.en = "Set default Julia version"
+[resources.actions.default]
+command = "juliaup_default"
+name.en = "Set default Julia version"
 
-    [resources.actions.update_versions]
-    command = "juliaup_update"
-    name.en = "Update Julia versions"
+[resources.actions.update_versions]
+command = "juliaup_update"
+name.en = "Update Julia versions"
 
-    [resources.actions.update_juliaup]
-    command = "juliaup_self_update"
-    name.en = "Update juliaup"
+[resources.actions.update_juliaup]
+command = "juliaup_self_update"
+name.en = "Update juliaup"
