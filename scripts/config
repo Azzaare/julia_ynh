@@ -34,32 +34,42 @@ set__default_version() {
 }
 
 get__installed_versions() {
-  local output list_items raw_html html
+  local output line
   output="$(sudo -u "$app" -H "$juliaup_bin" status 2>/dev/null || true)"
 
-  raw_html="$(printf '%s' "$output" | sed -e 's/&/&amp;/g' -e 's/</&lt;/g' -e 's/>/&gt;/g' -e 's/\r//g' -e ':a;N;$!ba;s/\n/&#10;/g')"
-
-  list_items="$(echo "$output" | awk '
+  line="$(echo "$output" | awk '
     /^[[:space:]]*Default[[:space:]]/ { next }
     /^[[:space:]]*-+[[:space:]]*$/ { next }
     /^[[:space:]]*$/ { next }
     {
-      line = $0
-      sub(/^[[:space:]]*\*[[:space:]]+/, "default ", line)
-      sub(/^[[:space:]]+/, "", line)
-      gsub(/&/, "&amp;", line)
-      gsub(/</, "&lt;", line)
-      gsub(/>/, "&gt;", line)
-      printf "<li>%s</li>", line
+      if ($1 == "*") {
+        channel = $2
+        version = $3
+        suffix = " (default)"
+      } else {
+        channel = $1
+        version = $2
+        suffix = ""
+      }
+      if (channel == "" || version == "") {
+        next
+      }
+      item = "• " channel " " version suffix
+      if (out == "") {
+        out = item
+      } else {
+        out = out "  " item
+      }
+    }
+    END {
+      if (out == "") {
+        out = "• (no versions installed)"
+      }
+      print out
     }
   ')"
 
-  if [ -z "$list_items" ]; then
-    list_items="<li>(no versions installed)</li>"
-  fi
-
-  html="<details><summary>Raw output</summary><pre>${raw_html}</pre></details><details><summary>Parsed list</summary><ul>${list_items}</ul></details>"
-  echo "$html"
+  echo "$line"
 }
 
 get__status() {
