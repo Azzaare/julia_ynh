@@ -1,0 +1,50 @@
+packaging_format = 2
+
+id = "julia"
+name = "Julia (via juliaup)"
+description.en = "Julia programming language installed via juliaup version manager"
+version = "1.0.0~ynh1"
+maintainers = ["Azzaare"]
+
+[upstream]
+license = "MIT"
+website = "https://julialang.org"
+code = "https://github.com/JuliaLang/juliaup"
+
+[integration]
+yunohost = ">= 11.2"
+helpers_version = "2.1"
+architectures = ["amd64","arm64"]
+multi_instance = true
+ldap = "not_relevant"
+sso = "not_relevant"
+disk = "500M"
+ram.runtime = "128M"
+
+[resources]
+
+    [resources.actions]
+
+    [resources.actions.status]
+    command = "juliaup_status"
+    name.en = "Show installed Julia versions"
+
+    [resources.actions.add]
+    command = "juliaup_add"
+    name.en = "Install Julia version"
+
+    [resources.actions.remove]
+    command = "juliaup_remove"
+    name.en = "Remove Julia version"
+
+    [resources.actions.default]
+    command = "juliaup_default"
+    name.en = "Set default Julia version"
+
+    [resources.actions.update_versions]
+    command = "juliaup_update"
+    name.en = "Update Julia versions"
+
+    [resources.actions.update_juliaup]
+    command = "juliaup_self_update"
+    name.en = "Update juliaup"

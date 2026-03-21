@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eu
+
+# shellcheck disable=SC1090
+source "$(dirname "$0")/_common.sh"
+
+sudo -u "$app" -H juliaup self update
+sudo -u "$app" -H juliaup update

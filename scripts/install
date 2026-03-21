@@ -1,0 +1,20 @@
+#!/bin/bash
+set -eu
+
+# shellcheck disable=SC1090
+source "$(dirname "$0")/_common.sh"
+
+ynh_system_user_create --username="$app"
+
+yunohost_deb="curl ca-certificates"
+ynh_apt_install_dependencies $yunohost_deb
+
+sudo -u "$app" -H bash << 'EOF'
+curl -fsSL https://install.julialang.org | sh -s -- -y
+EOF
+
+cat > "/etc/profile.d/$app.sh" << EOF
+export PATH="/home/$app/.juliaup/bin:$PATH"
+EOF
+
+sudo -u "$app" -H juliaup status
