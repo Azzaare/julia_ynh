@@ -34,42 +34,36 @@ set__default_version() {
 }
 
 get__installed_versions() {
-  local output line
+  local output raw_flat parsed
   output="$(sudo -u "$app" -H "$juliaup_bin" status 2>/dev/null || true)"
 
-  line="$(echo "$output" | awk '
+  raw_flat="$(printf '%s' "$output" | sed ':a;N;$!ba;s/\n/\\n/g')"
+
+  parsed="$(echo "$output" | awk '
     /^[[:space:]]*Default[[:space:]]/ { next }
     /^[[:space:]]*-+[[:space:]]*$/ { next }
     /^[[:space:]]*$/ { next }
     {
+      default_flag = ""
       if ($1 == "*") {
         channel = $2
         version = $3
-        suffix = " (default)"
+        default_flag = " (default)"
       } else {
         channel = $1
         version = $2
-        suffix = ""
       }
-      if (channel == "" || version == "") {
-        next
-      }
-      item = "• " channel " " version suffix
-      if (out == "") {
-        out = item
-      } else {
-        out = out "  " item
-      }
+      if (channel == "" || version == "") next
+      item = channel " " version default_flag
+      if (out == "") out = item; else out = out " | " item
     }
     END {
-      if (out == "") {
-        out = "• (no versions installed)"
-      }
+      if (out == "") out = "(no versions installed)"
       print out
     }
   ')"
 
-  echo "$line"
+  echo "RAW: $raw_flat || PARSED: $parsed"
 }
 
 get__status() {
