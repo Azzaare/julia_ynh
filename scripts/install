@@ -23,6 +23,11 @@ chmod 755 "/home/$app"
 chmod -R o+rx "/home/$app/.juliaup"
 chmod -R o+rx "/home/$app/.julia"
 
+# Allow all users to create juliaup lockfiles (needed by the julia launcher)
+mkdir -p "$juliaup_depot/juliaup"
+chown -R "$app:$app" "$juliaup_depot"
+chmod 1777 "$juliaup_depot/juliaup"
+
 cat > "/etc/profile.d/$app.sh" << EOF
 if [ "${USER:-}" = "$app" ]; then
   export PATH="/home/$app/.juliaup/bin:$PATH"
