@@ -7,6 +7,8 @@ It uses the shared juliaup depot in /home/julia/.julia and runs the Julia binary
 from /home/julia/.juliaup.
 The launcher also forces HOME=/home/julia to avoid failures for users without
 a home directory.
+It also changes the working directory to /home/julia to avoid errors when the
+current directory does not exist for the caller.
 
 Notes:
 - The juliaup CLI should be used via YunoHost actions or by running as the app user.

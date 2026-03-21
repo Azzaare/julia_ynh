@@ -44,8 +44,10 @@ if [ "$app" = "julia" ]; then
 #!/bin/bash
 set -eu
 umask 000
+cd "/home/$app"
 export HOME="/home/$app"
 export JULIAUP_DEPOT_PATH="/home/$app/.julia"
+export JULIA_DEPOT_PATH="/home/$app/.julia"
 export JULIAUP_CHANNEL="${JULIAUP_CHANNEL:-release}"
 exec "/home/$app/.juliaup/bin/julia" "$@"
 EOF
