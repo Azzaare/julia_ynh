@@ -11,7 +11,10 @@ It also changes the working directory to /home/julia to avoid errors when the
 current directory does not exist for the caller.
 
 Notes:
-- The juliaup CLI should be used via YunoHost actions or by running as the app user.
+- Prefer the webadmin Config panel for juliaup management.
+- This is a global Julia installation managed by juliaup. It is sufficient for
+  other YunoHost apps or services that depend on Julia: they can call the global
+  `julia` launcher and rely on juliaup for versions and environments.
 - The launcher is intended for system-wide Julia execution without extra setup.
 - This package is single-instance by design (shared juliaup depot/launcher).
 
@@ -25,30 +28,14 @@ It runs with HOME=/home/julia and uses the shared juliaup depot.
 In YunoHost webadmin, use the app "Config panel" to access juliaup actions
 (status, add/remove versions, set default, update).
 
-## List installed Julia versions
+## CLI (optional)
 
-juliaup status
+If you still want to manage versions from the shell, use the global launcher:
 
-## Install LTS
-
-juliaup add lts
-
-## Install a specific version
-
-juliaup add 1.11
-
-## Set default Julia version
-
-juliaup default 1.11
-
-## Update installed Julia versions
-
-juliaup update
-
-## Update juliaup
-
-juliaup self update
-
-## Remove a version
-
-juliaup remove 1.10
+- List installed versions: `juliaup status`
+- Install LTS: `juliaup add lts`
+- Install a specific version: `juliaup add 1.11`
+- Set default version: `juliaup default 1.11`
+- Update installed versions: `juliaup update`
+- Update juliaup: `juliaup self update`
+- Remove a version: `juliaup remove 1.10`

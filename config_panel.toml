@@ -2,71 +2,86 @@ version = "1.0"
 
 [main]
 name.en = "Juliaup"
+name.fr = "Juliaup"
 
 [main.status]
 name.en = "Installed versions"
 help.en = "Refresh this page to update the list."
+name.fr = "Versions installées"
+help.fr = "Rafraîchissez cette page pour mettre à jour la liste."
 
 [main.status.installed_versions]
 type = "text"
 ask.en = "Installed Julia versions"
+ask.fr = "Versions Julia installées"
 readonly = true
 bind = "null"
 
 [main.add]
 name.en = "Install a version"
+name.fr = "Installer une version"
 
 [main.add.add_version]
 type = "string"
 ask.en = "Version or channel"
+ask.fr = "Version ou canal"
 example = "lts"
 bind = "null"
 
 [main.add.add]
 type = "button"
 ask.en = "Install"
+ask.fr = "Installer"
 style = "success"
 icon = "plus"
 bind = "null"
 
 [main.remove]
 name.en = "Remove a version"
+name.fr = "Supprimer une version"
 
 [main.remove.remove_version]
 type = "string"
 ask.en = "Version or channel"
+ask.fr = "Version ou canal"
 example = "1.10"
 bind = "null"
 
 [main.remove.remove]
 type = "button"
 ask.en = "Remove"
+ask.fr = "Supprimer"
 style = "danger"
 icon = "trash"
 bind = "null"
 
 [main.default]
 name.en = "Set default version"
+name.fr = "Définir la version par défaut"
 
 [main.default.default_version]
 type = "string"
 ask.en = "Version or channel"
+ask.fr = "Version ou canal"
 example = "1.11"
 bind = "null"
 
 [main.default.default]
 type = "button"
 ask.en = "Set default"
+ask.fr = "Définir par défaut"
 style = "warning"
 icon = "star"
 bind = "null"
 
 [main.update]
 name.en = "Update"
+name.fr = "Mettre à jour"
 
 [main.update.update_versions]
 type = "button"
 ask.en = "Update installed Julia versions"
+ask.fr = "Mettre à jour les versions Julia installées"
 style = "success"
 icon = "refresh"
 bind = "null"
@@ -74,6 +89,7 @@ bind = "null"
 [main.update.update_juliaup]
 type = "button"
 ask.en = "Update juliaup"
+ask.fr = "Mettre à jour juliaup"
 style = "info"
 icon = "download"
 bind = "null"

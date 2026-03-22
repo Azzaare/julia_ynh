@@ -3,7 +3,8 @@ packaging_format = 2
 id = "julia"
 name = "Julia (via juliaup)"
 description.en = "Julia programming language installed via juliaup version manager"
-version = "1.0.0~ynh26"
+description.fr = "Langage de programmation Julia installé via le gestionnaire de versions juliaup"
+version = "1.0.0~ynh29"
 maintainers = ["Azzaare"]
 
 [upstream]
