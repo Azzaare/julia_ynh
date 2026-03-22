@@ -4,13 +4,13 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-ynh_restore_file --origin_path="/home/$app/.juliaup" --not_mandatory
-ynh_restore_file --origin_path="/home/$app/.julia" --not_mandatory
+ynh_restore_file --origin_path="$install_dir/.juliaup" --not_mandatory
+ynh_restore_file --origin_path="$install_dir/.julia" --not_mandatory
 
-if [ -d "/home/$app/.juliaup" ]; then
-  chown -R "$app:$app" "/home/$app/.juliaup"
+if [ -d "$install_dir/.juliaup" ]; then
+  chown -R "$app:$app" "$install_dir/.juliaup"
 fi
 
-if [ -d "/home/$app/.julia" ]; then
-  chown -R "$app:$app" "/home/$app/.julia"
+if [ -d "$install_dir/.julia" ]; then
+  chown -R "$app:$app" "$install_dir/.julia"
 fi

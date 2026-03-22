@@ -3,11 +3,11 @@
 ## Global julia launcher
 
 A global launcher is installed at /usr/local/bin/julia (primary instance only).
-It uses the shared juliaup depot in /home/julia/.julia and runs the Julia binary
-from /home/julia/.juliaup.
-The launcher also forces HOME=/home/julia to avoid failures for users without
+It uses the shared juliaup depot in /var/lib/julia/.julia and runs the Julia binary
+from /var/lib/julia/.juliaup.
+The launcher also forces HOME=/var/lib/julia to avoid failures for users without
 a home directory.
-It also changes the working directory to /home/julia to avoid errors when the
+It also changes the working directory to /var/lib/julia to avoid errors when the
 current directory does not exist for the caller.
 
 Notes:
@@ -21,7 +21,7 @@ Notes:
 ## Global juliaup launcher
 
 A global launcher is installed at /usr/local/bin/juliaup (primary instance only).
-It runs with HOME=/home/julia and uses the shared juliaup depot.
+It runs with HOME=/var/lib/julia and uses the shared juliaup depot.
 
 ## Webadmin actions
 

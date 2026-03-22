@@ -4,7 +4,7 @@ id = "julia"
 name = "Julia (via juliaup)"
 description.en = "Julia programming language installed via juliaup version manager"
 description.fr = "Langage de programmation Julia installé via le gestionnaire de versions juliaup"
-version = "1.0.0~ynh29"
+version = "1.0.0~ynh32"
 maintainers = ["Azzaare"]
 
 [upstream]
@@ -26,7 +26,7 @@ ram.runtime = "128M"
 [resources]
 
 [resources.system_user]
-home = "/home/__APP__"
+home = "/var/lib/__APP__"
 
 [resources.apt]
 packages = ["curl", "ca-certificates"]

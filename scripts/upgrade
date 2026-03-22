@@ -4,9 +4,15 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-ynh_app_setting_set --app="$app" --key=install_dir --value="/home/$app"
+if [ -d "/home/$app" ] && [ ! -d "$install_dir" ]; then
+  ynh_print_info "Migrating data directory from /home/$app to $install_dir"
+  mv "/home/$app" "$install_dir"
+  chown -R "$app:$app" "$install_dir"
+fi
 
-sudo -u "$app" -H "$juliaup_bin" self update
-sudo -u "$app" -H "$juliaup_bin" update
+ynh_app_setting_set --app="$app" --key=install_dir --value="$install_dir"
+
+ynh_exec_as_app "$juliaup_bin" self update
+ynh_exec_as_app "$juliaup_bin" update
 
 ensure_juliaup_permissions

@@ -3,11 +3,11 @@
 ## Lanceur global julia
 
 Un lanceur global est installé dans /usr/local/bin/julia (instance principale uniquement).
-Il utilise le dépôt juliaup partagé dans /home/julia/.julia et exécute le binaire Julia
-depuis /home/julia/.juliaup.
-Le lanceur force aussi HOME=/home/julia pour éviter les erreurs chez les utilisateurs sans
+Il utilise le dépôt juliaup partagé dans /var/lib/julia/.julia et exécute le binaire Julia
+depuis /var/lib/julia/.juliaup.
+Le lanceur force aussi HOME=/var/lib/julia pour éviter les erreurs chez les utilisateurs sans
 répertoire personnel.
-Il change également le répertoire de travail vers /home/julia pour éviter les erreurs
+Il change également le répertoire de travail vers /var/lib/julia pour éviter les erreurs
 lorsque le répertoire courant n'existe pas pour l'appelant.
 
 Notes :
@@ -21,7 +21,7 @@ Notes :
 ## Lanceur global juliaup
 
 Un lanceur global est installé dans /usr/local/bin/juliaup (instance principale uniquement).
-Il s'exécute avec HOME=/home/julia et utilise le dépôt juliaup partagé.
+Il s'exécute avec HOME=/var/lib/julia et utilise le dépôt juliaup partagé.
 
 ## Actions webadmin
 
