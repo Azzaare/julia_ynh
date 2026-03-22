@@ -15,8 +15,7 @@ if [ ! -x "$juliaup_bin" ] && [ -f "$juliaup_depot/juliaup/juliaup.json" ]; then
   rm -f "$juliaup_depot/juliaup/juliaup.json"
 fi
 
-ynh_exec_as_app env JULIAUP_DEPOT_PATH="$juliaup_depot" bash -c \
-  'curl -fsSL https://install.julialang.org | sh -s -- -y --add-to-path=no --background-selfupdate=0'
+_juliaup_install
 
 ensure_juliaup_permissions
 

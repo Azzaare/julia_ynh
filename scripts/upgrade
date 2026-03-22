@@ -4,15 +4,25 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
-if [ -d "/home/$app" ] && [ ! -d "$install_dir" ]; then
+if [ -d "/home/$app" ] && [ ! -e "$install_dir/.juliaup" ]; then
   ynh_print_info "Migrating data directory from /home/$app to $install_dir"
-  mv "/home/$app" "$install_dir"
+  if [ ! -d "$install_dir" ]; then
+    mv "/home/$app" "$install_dir"
+  else
+    cp -a "/home/$app/." "$install_dir/"
+    rm -rf "/home/$app"
+  fi
   chown -R "$app:$app" "$install_dir"
 fi
 
 ynh_app_setting_set --app="$app" --key=install_dir --value="$install_dir"
 
-ynh_exec_as_app "$juliaup_bin" self update
-ynh_exec_as_app "$juliaup_bin" update
+if [ ! -x "$juliaup_bin" ]; then
+  ynh_print_info "juliaup not found in $install_dir, installing..."
+  _juliaup_install
+fi
+
+_juliaup_exec self update
+_juliaup_exec update
 
 ensure_juliaup_permissions

@@ -50,6 +50,11 @@ _juliaup_status_list() {
   echo "$lines" | sed 's/^/  /'
 }
 
+_juliaup_install() {
+  ynh_exec_as_app env JULIAUP_DEPOT_PATH="$juliaup_depot" bash -c \
+    'curl -fsSL https://install.julialang.org | sh -s -- -y --add-to-path=no --background-selfupdate=0'
+}
+
 ensure_juliaup_permissions() {
   # Ensure home and depot exist and are writable as expected
   mkdir -p "$install_dir" "$juliaup_depot/juliaup"
