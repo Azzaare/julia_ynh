@@ -4,6 +4,7 @@ set -eu
 # shellcheck disable=SC1090
 source "$(dirname "$0")/_common.sh"
 
+ynh_script_progression "Preparing juliaup directories..."
 # Ensure home exists for juliaup
 mkdir -p "$install_dir"
 mkdir -p "$juliaup_depot"
@@ -12,11 +13,14 @@ ynh_app_setting_set --app="$app" --key=install_dir --value="$install_dir"
 
 # If a stale juliaup config exists without a juliaup binary, clean it up
 if [ ! -x "$juliaup_bin" ] && [ -f "$juliaup_depot/juliaup/juliaup.json" ]; then
-  rm -f "$juliaup_depot/juliaup/juliaup.json"
+  ynh_print_info "Removing stale juliaup metadata before reinstall."
+  ynh_safe_rm "$juliaup_depot/juliaup/juliaup.json"
 fi
 
+ynh_script_progression "Installing juliaup..."
 _juliaup_install
 
+ynh_script_progression "Fixing shared Julia permissions..."
 ensure_juliaup_permissions
 
 cat > "/etc/profile.d/$app.sh" << EOF

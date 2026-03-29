@@ -10,7 +10,7 @@ if [ -d "/home/$app" ] && [ ! -e "$install_dir/.juliaup" ]; then
     mv "/home/$app" "$install_dir"
   else
     cp -a "/home/$app/." "$install_dir/"
-    rm -rf "/home/$app"
+    ynh_safe_rm "/home/$app"
   fi
   chown -R "$app:$app" "$install_dir"
 fi
@@ -22,7 +22,9 @@ if [ ! -x "$juliaup_bin" ]; then
   _juliaup_install
 fi
 
+ynh_script_progression "Updating juliaup channels..."
 _juliaup_exec self update
 _juliaup_exec update
 
+ynh_script_progression "Fixing shared Julia permissions..."
 ensure_juliaup_permissions
