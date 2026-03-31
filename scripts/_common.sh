@@ -71,10 +71,13 @@ ensure_juliaup_permissions() {
   chown -R "$app:$app" "$install_dir"
 
   chmod 755 "$install_dir"
-  chmod -R o+rx "$install_dir/.juliaup"
+  mkdir -p "$install_dir/.juliaup"
+  find "$install_dir/.juliaup" -type d -exec chmod 755 {} \;
+  chmod -R a+rX "$install_dir/.juliaup"
+
   chmod 755 "$juliaup_depot"
-  chmod 755 "$juliaup_depot/juliaup"
-  chmod -R o+rx "$juliaup_depot/juliaup"
+  find "$juliaup_depot/juliaup" -type d -exec chmod 755 {} \; 2>/dev/null || true
+  chmod -R a+rX "$juliaup_depot/juliaup" 2>/dev/null || true
 
   # Global launcher for the primary instance
   if [ "$app" = "julia" ]; then
