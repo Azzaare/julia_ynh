@@ -64,30 +64,24 @@ _julia_environment_update() {
 }
 
 ensure_juliaup_permissions() {
-  # Ensure home and depot exist and are writable as expected
+  # Ensure home and depot exist and are writable as expected.
+  # Only the julia system user should own the shared depot. Other users
+  # merely need read+execute access to the juliaup-managed binaries.
   mkdir -p "$install_dir" "$juliaup_depot/juliaup"
   chown -R "$app:$app" "$install_dir"
 
   chmod 755 "$install_dir"
   chmod -R o+rx "$install_dir/.juliaup"
-  chmod -R o+rx "$juliaup_depot"
-
-  # Allow all users to create juliaup lockfiles (needed by the julia launcher)
-  chmod 1777 "$juliaup_depot"
-  chmod 1777 "$juliaup_depot/juliaup"
-  touch "$juliaup_depot/juliaup/.juliaup-lock"
-  chmod 666 "$juliaup_depot/juliaup/.juliaup-lock"
+  chmod 755 "$juliaup_depot"
+  chmod 755 "$juliaup_depot/juliaup"
+  chmod -R o+rx "$juliaup_depot/juliaup"
 
   # Global launcher for the primary instance
   if [ "$app" = "julia" ]; then
     cat > "/usr/local/bin/julia" << EOF
 #!/bin/bash
 set -eu
-umask 000
-cd "$install_dir"
-export HOME="$install_dir"
 export JULIAUP_DEPOT_PATH="$juliaup_depot"
-export JULIA_DEPOT_PATH="$juliaup_depot"
 export JULIAUP_CHANNEL="\${JULIAUP_CHANNEL:-release}"
 exec "$julia_bin" "\$@"
 EOF
@@ -96,7 +90,6 @@ EOF
     cat > "/usr/local/bin/juliaup" << EOF
 #!/bin/bash
 set -eu
-umask 000
 cd "$install_dir"
 export HOME="$install_dir"
 export JULIAUP_DEPOT_PATH="$juliaup_depot"
