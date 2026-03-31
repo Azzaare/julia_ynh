@@ -79,6 +79,8 @@ ensure_juliaup_permissions() {
   find "$juliaup_depot/juliaup" -type d -exec chmod 755 {} \; 2>/dev/null || true
   chmod -R a+rX "$juliaup_depot/juliaup" 2>/dev/null || true
   chmod 1777 "$juliaup_depot/juliaup"
+  mkdir -p "$juliaup_depot/logs"
+  chmod 1777 "$juliaup_depot/logs"
 
   # Global launcher for the primary instance
   if [ "$app" = "julia" ]; then
