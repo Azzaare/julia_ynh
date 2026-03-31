@@ -55,6 +55,14 @@ _juliaup_install() {
     'curl -fsSL https://install.julialang.org | sh -s -- -y --add-to-path=no --background-selfupdate=0'
 }
 
+_julia_environment_update() {
+  ynh_exec_as_app env \
+    HOME="$install_dir" \
+    JULIAUP_DEPOT_PATH="$juliaup_depot" \
+    JULIA_DEPOT_PATH="$juliaup_depot" \
+    "$julia_bin" --startup-file=no -e 'using Pkg; Pkg.update()'
+}
+
 ensure_juliaup_permissions() {
   # Ensure home and depot exist and are writable as expected
   mkdir -p "$install_dir" "$juliaup_depot/juliaup"

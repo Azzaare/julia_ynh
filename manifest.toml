@@ -4,7 +4,7 @@ id = "julia"
 name = "Julia (via juliaup)"
 description.en = "Julia programming language installed via juliaup version manager"
 description.fr = "Langage de programmation Julia installé via le gestionnaire de versions juliaup"
-version = "1.0.0~ynh34"
+version = "1.0.0~ynh35"
 maintainers = ["Azzaare"]
 
 [upstream]

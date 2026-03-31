@@ -93,3 +93,11 @@ ask.fr = "Mettre à jour juliaup"
 style = "info"
 icon = "download"
 bind = "null"
+
+[main.update.update_environment]
+type = "button"
+ask.en = "Update Julia environment"
+ask.fr = "Mettre à jour l'environnement Julia"
+style = "secondary"
+icon = "flask"
+bind = "null"

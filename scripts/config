@@ -61,6 +61,10 @@ get__update_juliaup() {
   echo ""
 }
 
+get__update_environment() {
+  echo ""
+}
+
 run__status() {
   _juliaup_exec status
 }
@@ -92,6 +96,10 @@ run__update_versions() {
 
 run__update_juliaup() {
   _juliaup_exec self update
+}
+
+run__update_environment() {
+  _julia_environment_update
 }
 
 ynh_app_config_run "$action"
