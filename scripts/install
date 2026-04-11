@@ -20,6 +20,9 @@ fi
 ynh_script_progression "Installing juliaup..."
 _run_with_permissions_repair _juliaup_install
 
+ynh_script_progression "Bootstrapping the shared Julia environment..."
+_run_with_permissions_repair _julia_environment_update
+
 ynh_script_progression "Deploying Julia launchers and shared configuration..."
 deploy_julia_shell_files
 

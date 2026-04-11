@@ -26,5 +26,8 @@ ynh_script_progression "Updating juliaup channels..."
 _run_with_permissions_repair _juliaup_exec self update
 _run_with_permissions_repair _juliaup_exec update
 
+ynh_script_progression "Refreshing the shared Julia environment..."
+_run_with_permissions_repair _julia_environment_update
+
 ynh_script_progression "Deploying Julia launchers and shared configuration..."
 deploy_julia_shell_files

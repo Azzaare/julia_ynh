@@ -79,7 +79,7 @@ _juliaup_install() {
 }
 
 _julia_environment_update() {
-  _julia_exec --startup-file=no -e 'using Pkg; Pkg.update()'
+  _julia_exec --startup-file=no -e 'using Pkg; registry_dir = joinpath(first(Base.DEPOT_PATH), "registries", "General"); isdir(registry_dir) || Pkg.Registry.add("General"); Pkg.Registry.update(); Pkg.update(); Pkg.precompile()'
 }
 
 ensure_juliaup_permissions() {
