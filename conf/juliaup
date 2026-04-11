@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+
+cd "__INSTALL_DIR__"
+export HOME="__INSTALL_DIR__"
+export JULIAUP_DEPOT_PATH="__JULIAUP_DEPOT__"
+export JULIA_DEPOT_PATH="__JULIAUP_DEPOT__"
+export PATH="__INSTALL_DIR__/.juliaup/bin:${PATH}"
+
+exec "__JULIAUP_BIN__" "$@"

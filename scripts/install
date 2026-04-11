@@ -18,15 +18,9 @@ if [ ! -x "$juliaup_bin" ] && [ -f "$juliaup_depot/juliaup/juliaup.json" ]; then
 fi
 
 ynh_script_progression "Installing juliaup..."
-_juliaup_install
+_run_with_permissions_repair _juliaup_install
 
-ynh_script_progression "Fixing shared Julia permissions..."
-ensure_juliaup_permissions
+ynh_script_progression "Deploying Julia launchers and shared configuration..."
+deploy_julia_shell_files
 
-cat > "/etc/profile.d/$app.sh" << EOF
-if [ "${USER:-}" = "$app" ]; then
-  export PATH="$install_dir/.juliaup/bin:$PATH"
-fi
-EOF
-
-ynh_exec_as_app "$juliaup_bin" status
+_juliaup_exec status

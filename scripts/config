@@ -73,33 +73,33 @@ run__add() {
   if [ -z "${add_version:-}" ]; then
     ynh_die --message="Please provide a Julia version or channel to install."
   fi
-  _juliaup_exec add "$add_version"
+  _run_with_permissions_repair _juliaup_exec add "$add_version"
 }
 
 run__remove() {
   if [ -z "${remove_version:-}" ]; then
     ynh_die --message="Please provide a Julia version or channel to remove."
   fi
-  _juliaup_exec remove "$remove_version"
+  _run_with_permissions_repair _juliaup_exec remove "$remove_version"
 }
 
 run__default() {
   if [ -z "${default_version:-}" ]; then
     ynh_die --message="Please provide a Julia version or channel to set as default."
   fi
-  _juliaup_exec default "$default_version"
+  _run_with_permissions_repair _juliaup_exec default "$default_version"
 }
 
 run__update_versions() {
-  _juliaup_exec update
+  _run_with_permissions_repair _juliaup_exec update
 }
 
 run__update_juliaup() {
-  _juliaup_exec self update
+  _run_with_permissions_repair _juliaup_exec self update
 }
 
 run__update_environment() {
-  _julia_environment_update
+  _run_with_permissions_repair _julia_environment_update
 }
 
 ynh_app_config_run "$action"

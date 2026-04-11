@@ -19,12 +19,12 @@ ynh_app_setting_set --app="$app" --key=install_dir --value="$install_dir"
 
 if [ ! -x "$juliaup_bin" ]; then
   ynh_print_info "juliaup not found in $install_dir, installing..."
-  _juliaup_install
+  _run_with_permissions_repair _juliaup_install
 fi
 
 ynh_script_progression "Updating juliaup channels..."
-_juliaup_exec self update
-_juliaup_exec update
+_run_with_permissions_repair _juliaup_exec self update
+_run_with_permissions_repair _juliaup_exec update
 
-ynh_script_progression "Fixing shared Julia permissions..."
-ensure_juliaup_permissions
+ynh_script_progression "Deploying Julia launchers and shared configuration..."
+deploy_julia_shell_files

@@ -1,0 +1,15 @@
+#!/bin/bash
+set -eu
+
+if [ -z "${HOME:-}" ] || [ ! -d "${HOME}" ]; then
+  export HOME="__INSTALL_DIR__"
+fi
+
+if [ ! -d "${PWD:-/}" ]; then
+  cd "__INSTALL_DIR__"
+fi
+
+export JULIAUP_DEPOT_PATH="__JULIAUP_DEPOT__"
+export JULIAUP_CHANNEL="${JULIAUP_CHANNEL:-release}"
+
+exec "__JULIA_BIN__" "$@"

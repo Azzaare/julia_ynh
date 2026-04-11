@@ -14,3 +14,6 @@ fi
 if [ -d "$install_dir/.julia" ]; then
   chown -R "$app:$app" "$install_dir/.julia"
 fi
+
+ensure_juliaup_permissions
+deploy_julia_shell_files
