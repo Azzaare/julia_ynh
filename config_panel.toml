@@ -1,103 +1,86 @@
 version = "1.0"
 
 [main]
-name.en = "Juliaup"
-name.fr = "Juliaup"
+name = "Juliaup"
 
 [main.status]
-name.en = "Installed versions"
-help.en = "Refresh this page to update the list."
-name.fr = "Versions installées"
-help.fr = "Rafraîchissez cette page pour mettre à jour la liste."
+name = "Installed versions"
+help = "Refresh this page to update the list."
 
 [main.status.installed_versions]
 type = "text"
-ask.en = "Installed Julia versions"
-ask.fr = "Versions Julia installées"
+ask = "Installed Julia versions"
 readonly = true
 bind = "null"
 
 [main.add]
-name.en = "Install a version"
-name.fr = "Installer une version"
+name = "Install a version"
 
 [main.add.add_version]
 type = "string"
-ask.en = "Version or channel"
-ask.fr = "Version ou canal"
+ask = "Version or channel"
 example = "lts"
 bind = "null"
 
 [main.add.add]
 type = "button"
-ask.en = "Install"
-ask.fr = "Installer"
+ask = "Install"
 style = "success"
 icon = "plus"
 bind = "null"
 
 [main.remove]
-name.en = "Remove a version"
-name.fr = "Supprimer une version"
+name = "Remove a version"
 
 [main.remove.remove_version]
 type = "string"
-ask.en = "Version or channel"
-ask.fr = "Version ou canal"
+ask = "Version or channel"
 example = "1.10"
 bind = "null"
 
 [main.remove.remove]
 type = "button"
-ask.en = "Remove"
-ask.fr = "Supprimer"
+ask = "Remove"
 style = "danger"
 icon = "trash"
 bind = "null"
 
 [main.default]
-name.en = "Set default version"
-name.fr = "Définir la version par défaut"
+name = "Set default version"
 
 [main.default.default_version]
 type = "string"
-ask.en = "Version or channel"
-ask.fr = "Version ou canal"
+ask = "Version or channel"
 example = "1.11"
 bind = "null"
 
 [main.default.default]
 type = "button"
-ask.en = "Set default"
-ask.fr = "Définir par défaut"
+ask = "Set default"
 style = "warning"
 icon = "star"
 bind = "null"
 
 [main.update]
-name.en = "Update"
-name.fr = "Mettre à jour"
+name = "Update"
 
 [main.update.update_versions]
 type = "button"
-ask.en = "Update installed Julia versions"
-ask.fr = "Mettre à jour les versions Julia installées"
+ask = "Update installed Julia versions"
 style = "success"
 icon = "refresh"
 bind = "null"
 
 [main.update.update_juliaup]
 type = "button"
-ask.en = "Update juliaup"
-ask.fr = "Mettre à jour juliaup"
+ask = "Update juliaup"
 style = "info"
 icon = "download"
 bind = "null"
 
 [main.update.update_environment]
 type = "button"
-ask.en = "Update Julia environment"
-ask.fr = "Mettre à jour l'environnement Julia"
+ask = "Update Julia environment"
 style = "info"
 icon = "flask"
 bind = "null"
