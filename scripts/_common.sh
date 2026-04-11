@@ -85,7 +85,7 @@ _julia_environment_update() {
 ensure_juliaup_permissions() {
   # Keep the shared depot readable for runtime users, but writable only
   # by the dedicated julia system user, except for the juliaup lockfile
-  # directory which must stay writable for launcher users.
+  # directory and lockfile which must stay writable for launcher users.
   mkdir -p "$install_dir" "$install_dir/.juliaup" "$juliaup_depot" "$juliaup_depot/juliaup" "$juliaup_depot/logs"
   chown -R "$app:$app" "$install_dir"
 
@@ -98,7 +98,10 @@ ensure_juliaup_permissions() {
   chmod -R a+rX "$juliaup_depot" 2>/dev/null || true
   chmod -R go-w "$juliaup_depot" 2>/dev/null || true
   # The launcher creates a lockfile next to juliaup.json before reading it.
+  touch "$juliaup_depot/juliaup/.juliaup-lock"
+  chown "$app:$app" "$juliaup_depot/juliaup/.juliaup-lock"
   chmod 1777 "$juliaup_depot/juliaup"
+  chmod 666 "$juliaup_depot/juliaup/.juliaup-lock"
   chmod 1777 "$juliaup_depot/logs"
 }
 
