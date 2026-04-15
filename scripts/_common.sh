@@ -91,8 +91,15 @@ ensure_juliaup_permissions() {
 
   chmod 755 "$install_dir"
   find "$install_dir/.juliaup" -type d -exec chmod 755 {} \; 2>/dev/null || true
-  chmod -R a+rX "$install_dir/.juliaup" 2>/dev/null || true
-  chmod -R go-w "$install_dir/.juliaup" 2>/dev/null || true
+
+  # Julia apps execute the shared launcher as their own service user, so the
+  # juliaup metadata must be world-readable while the binaries stay executable.
+  find "$install_dir/.juliaup" -type f ! -path "$install_dir/.juliaup/bin/*" -exec chmod u+rw,go+r,go-w {} \; 2>/dev/null || true
+  if [ -d "$install_dir/.juliaup/bin" ]; then
+    chmod 755 "$install_dir/.juliaup/bin"
+    find "$install_dir/.juliaup/bin" -type d -exec chmod 755 {} \; 2>/dev/null || true
+    find "$install_dir/.juliaup/bin" -type f -exec chmod u+rwx,go+rx,go-w {} \; 2>/dev/null || true
+  fi
 
   find "$juliaup_depot" -type d -exec chmod 755 {} \; 2>/dev/null || true
   chmod -R a+rX "$juliaup_depot" 2>/dev/null || true

@@ -1,9 +1,7 @@
 #!/bin/bash
 set -eu
 
-if [ -z "${HOME:-}" ] || [ ! -d "${HOME}" ]; then
-  export HOME="__INSTALL_DIR__"
-fi
+export HOME="__INSTALL_DIR__"
 
 if [ ! -d "${PWD:-/}" ]; then
   cd "__INSTALL_DIR__"
