@@ -31,6 +31,11 @@ _julia_exec() {
 _run_with_permissions_repair() {
   local rc=0
 
+  # An upgrade may start from metadata created by an older package revision.
+  # Repair it before invoking juliaup, not only after a failed invocation.
+  if [ -x "$juliaup_bin" ]; then
+    ensure_juliaup_permissions
+  fi
   "$@" || rc=$?
   ensure_juliaup_permissions
 
