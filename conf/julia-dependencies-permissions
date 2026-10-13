@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+. /usr/local/lib/julia_ynh/runtime-permissions.sh
+repair_shared_julia_runtime_permissions /var/lib/julia julia
+
+group="julia"
+getent group "$group" >/dev/null 2>&1 || groupadd --system "$group"
+
+for user in "$@"; do
+  case "$user" in
+    ""|*[!a-zA-Z0-9_-]*) continue ;;
+  esac
+  id "$user" >/dev/null 2>&1 || continue
+  usermod --append --groups "$group" "$user"
+done
+
+for path in \
+  /var/lib/julia/registry_depot \
+  /var/lib/julia/registry_sources \
+  /var/lib/julia/julia_shared_depot \
+  /var/lib/julia/*_shared_depot
+do
+  [ -e "$path" ] || continue
+  chown -R root:"$group" "$path"
+  find "$path" -type d -exec chmod g+rwx {} \; 2>/dev/null || true
+  find "$path" -type f -exec chmod g+rw {} \; 2>/dev/null || true
+  chmod -R go-w "$path" 2>/dev/null || true
+done
+
+# Runtime ownership remains with julia; dependent apps only read it. Shared
+# application packages above remain root-owned and readable by their group.
+
+exit 0

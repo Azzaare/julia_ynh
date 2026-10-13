@@ -5,6 +5,13 @@ set -eu
 source "$(dirname "$0")/_common.sh"
 
 ynh_safe_rm "/etc/profile.d/$app.sh"
+ynh_safe_rm "/usr/local/lib/julia_ynh"
+ynh_safe_rm "/usr/local/sbin/julia-dependencies-permissions"
+
+# Julia is the owner of the shared runtime.  Dependent applications must be
+# removed before Julia, so it is safe to purge the shared trees here and make
+# the next installation genuinely from scratch.
+ynh_safe_rm "/var/lib/julia"
 
 # Remove global launcher if this is the primary instance
 if [ "$app" = "julia" ]; then

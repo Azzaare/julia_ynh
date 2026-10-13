@@ -3,7 +3,7 @@ packaging_format = 2
 id = "julia"
 name = "Julia (via juliaup)"
 description.en = "Julia programming language installed via juliaup version manager"
-version = "1.0.0~ynh47"
+version = "1.0.0~ynh52"
 maintainers = ["Azzaare"]
 
 [upstream]
@@ -12,7 +12,7 @@ website = "https://julialang.org"
 code = "https://github.com/JuliaLang/juliaup"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.1"
 helpers_version = "2.1"
 architectures = ["amd64","arm64"]
 multi_instance = false
@@ -29,3 +29,9 @@ home = "/var/lib/__APP__"
 
 [resources.apt]
 packages = ["curl", "ca-certificates"]
+
+[install.oasis_registry_token]
+ask.en = "GitLab access token for the private Oasis Julia registry"
+help.en = "Optional. Provide a token with read_repository only when this server must install private Mirage packages. It is used only during installation and is not saved as an application setting."
+type = "password"
+optional = true

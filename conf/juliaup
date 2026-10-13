@@ -1,19 +1,17 @@
 #!/bin/bash
 set -eu
+source /usr/local/lib/julia_ynh/runtime-permissions.sh
 
 repair_juliaup_runtime_permissions() {
-  mkdir -p "__JULIAUP_DEPOT__/juliaup"
-  touch "__JULIAUP_DEPOT__/juliaup/.juliaup-lock"
-  find "__JULIAUP_DEPOT__/juliaup" -maxdepth 1 -type f -exec chmod a+r {} \; 2>/dev/null || true
-  chmod 1777 "__JULIAUP_DEPOT__/juliaup"
-  chmod 666 "__JULIAUP_DEPOT__/juliaup/.juliaup-lock"
-  if [ -d "__JULIAUP_DEPOT__/logs" ]; then
-    chmod 1777 "__JULIAUP_DEPOT__/logs"
-  fi
+  repair_shared_julia_runtime_permissions "__INSTALL_DIR__" "__APP__"
 }
 
 if [ "$(id -u)" -eq 0 ] && [ -z "${JULIAUP_YNH_REEXEC:-}" ]; then
-  exec runuser -u "__APP__" -- env JULIAUP_YNH_REEXEC=1 "$0" "$@"
+  repair_juliaup_runtime_permissions
+  rc=0
+  runuser -u "__APP__" -- env JULIAUP_YNH_REEXEC=1 "$0" "$@" || rc=$?
+  repair_juliaup_runtime_permissions
+  exit "$rc"
 fi
 
 cd "__INSTALL_DIR__"
@@ -23,6 +21,7 @@ export JULIA_DEPOT_PATH="__JULIAUP_DEPOT__"
 export PATH="__INSTALL_DIR__/.juliaup/bin:${PATH}"
 
 rc=0
+repair_juliaup_runtime_permissions
 "__JULIAUP_BIN__" "$@" || rc=$?
 repair_juliaup_runtime_permissions
 exit "$rc"

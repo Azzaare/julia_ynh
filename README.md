@@ -43,3 +43,14 @@ juliaup self update
 Remove a version:
 
 juliaup remove 1.10
+
+Shared-runtime permissions are repaired before and after every Juliaup command,
+including status, config-panel actions, the public CLI and failed commands. The
+same routine is installed read-only in `/usr/local/lib/julia_ynh/` for consumers.
+Juliaup remains owned by the `julia` account; dependency maintenance must not
+transfer its configuration or binaries to root. Private registry depots retain
+separate access rules. Application package operations repair permissions on exit.
+
+Run `bash tests/permissions.sh ../pluto_ynh ../caravane_ynh` to exercise the real
+file modes with substituted administrative identities and local command peers.
+This checks successful and failed actions without downloading Julia or packages.
