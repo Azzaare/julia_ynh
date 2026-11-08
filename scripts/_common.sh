@@ -196,16 +196,7 @@ ensure_juliaup_permissions() {
 
   getent group "$julia_dependencies_group" >/dev/null 2>&1 || groupadd --system "$julia_dependencies_group"
   usermod --append --groups "$julia_dependencies_group" "$app"
-  for shared_path in \
-    "$install_dir/registry_depot" \
-    "$install_dir/registry_sources" \
-    "$install_dir/julia_shared_depot"
-  do
-    [ -e "$shared_path" ] || continue
-    chown -R root:"$julia_dependencies_group" "$shared_path"
-    chmod -R g+rX "$shared_path" 2>/dev/null || true
-    chmod -R go-w "$shared_path" 2>/dev/null || true
-  done
+  # Registry and application depots keep their own owners and modes.
 }
 
 deploy_julia_shell_files() {

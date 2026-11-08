@@ -14,20 +14,7 @@ for user in "$@"; do
   usermod --append --groups "$group" "$user"
 done
 
-for path in \
-  /var/lib/julia/registry_depot \
-  /var/lib/julia/registry_sources \
-  /var/lib/julia/julia_shared_depot \
-  /var/lib/julia/*_shared_depot
-do
-  [ -e "$path" ] || continue
-  chown -R root:"$group" "$path"
-  find "$path" -type d -exec chmod g+rwx {} \; 2>/dev/null || true
-  find "$path" -type f -exec chmod g+rw {} \; 2>/dev/null || true
-  chmod -R go-w "$path" 2>/dev/null || true
-done
-
-# Runtime ownership remains with julia; dependent apps only read it. Shared
-# application packages above remain root-owned and readable by their group.
+# Consumers manage their own depots. Never modify registries or another app's
+# depot as a side effect of granting access to the Julia runtime.
 
 exit 0

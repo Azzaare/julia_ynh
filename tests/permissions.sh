@@ -23,6 +23,9 @@ juliaup_bin="$install_dir/.juliaup/bin/juliaup"
 julia_bin="$install_dir/.juliaup/bin/julia"
 julia_bin_dir="$install_dir/.juliaup/bin"
 mkdir -p "$julia_bin_dir" "$juliaup_depot/juliaup" "$install_dir/registry_depot"
+mkdir -p "$juliaup_depot/registries/Oasis"
+printf registry > "$juliaup_depot/registries/Oasis/Registry.toml"
+chmod 600 "$juliaup_depot/registries/Oasis/Registry.toml"
 printf '{"Default":"release"}\n' > "$juliaup_depot/juliaup/juliaup.json"
 printf private > "$install_dir/registry_depot/private"
 chmod 600 "$install_dir/registry_depot/private"
@@ -44,6 +47,7 @@ assert_repaired() {
   test "$(stat -c %a "$juliaup_depot/juliaup")" = 1777
   test "$(stat -c %a "$juliaup_depot/juliaup/.juliaup-lock")" = 666
   test "$(stat -c %U "$juliaup_depot/juliaup/juliaup.json")" = "$account"
+  test "$(stat -c %a "$juliaup_depot/registries/Oasis/Registry.toml")" = 600
 }
 source <(sed '\|source .*_common.sh|d' "$package_root/scripts/config")
 add_version=lts; remove_version=lts; default_version=release
@@ -85,22 +89,30 @@ if [ "$(id -u)" -ne 0 ] && grep -E 'root:.*[/]\.julia(up)?([ /]|$)' "$fixture/ch
   printf 'Runtime ownership was transferred to root\n' >&2; exit 1
 fi
 
+# Consumers may run Julia, but do not repair the shared runtime themselves.
+cat > "$julia_bin" <<'FIXTURE'
+#!/bin/sh
+if [ "${FIXTURE_FAIL:-0}" = 1 ]; then exit 17; fi
+exit 0
+FIXTURE
+chmod 755 "$julia_bin"
 for consumer in "$@"; do
   consumer=$(cd "$consumer" && pwd)
   # Keep all paths inside the fixture, including the two writable depot layers.
   export YNH_APP_BASEDIR="$consumer"
+  unset -f _pkg_exec _pluto_update_deps 2>/dev/null || true
   source <(sed '\|^source /usr/share/yunohost/helpers$|d' "$consumer/scripts/_common.sh")
   app=$account; app_home="$fixture/app"; install_dir="$fixture/app/project"
   data_dir="$fixture/app/data"; depot_dir="$fixture/app/cache"
   julia_home="$fixture/runtime"; julia_runtime_home="$julia_home"; julia_runtime_account=$account
   juliaup_home="$julia_home/.juliaup"; juliaup_depot="$julia_home/.julia"
   juliaup_bin="$juliaup_home/bin/juliaup"; julia_bin="$juliaup_home/bin/julia"
-  julia_public_depot="$juliaup_depot"; shared_private_depot="$fixture/private-shared"
+  julia_public_depot="$juliaup_depot"; shared_private_depot="$app_home/package_depot"
   shared_julia_owner="$account:$account"
   mkdir -p "$install_dir" "$data_dir" "$depot_dir" "$shared_private_depot"
   for failed in 0 1; do
     rc=0
-    if [ -f "$consumer/conf/shared_julia_runtime.sh" ]; then
+    if declare -F _pkg_exec >/dev/null; then
       FIXTURE_FAIL=$failed _pkg_exec fixture >/dev/null || rc=$?
     else
       FIXTURE_FAIL=$failed _pluto_update_deps >/dev/null || rc=$?
